@@ -17,6 +17,7 @@ Generate some statistics for stations in a `receiver-wiki.json`-file.
 ## Data Format
 ### receiver-wiki.json
 
+```
 {'receivers': {
     id: {'description': string,
          'photo': string,
@@ -27,6 +28,7 @@ Generate some statistics for stations in a `receiver-wiki.json`-file.
   },
   'timestamp': isoformat
 }
+```
 
 # License
 
