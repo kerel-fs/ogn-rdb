@@ -12,7 +12,7 @@ The retrieved information is saved as `receiver-wiki.json`.
 Generate some statistics for stations in a `receiver-wiki.json`-file.
 
 ### Library
-- wikidotcrawler.py
+- wikidotparser.py
 
 ## Data Format
 ### receiver-wiki.json
