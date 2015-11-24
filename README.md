@@ -20,7 +20,7 @@ Generate some statistics for stations in a `receiver-wiki.json`-file.
 ```
 {'receivers': {
     id: {'description': string,
-         'photo': string,
+         'photos': [string, ...],
          'contact': string,
          'country': string
         },
