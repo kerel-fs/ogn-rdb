@@ -29,8 +29,9 @@ if __name__ == "__main__":
                         metavar="OUT_FILE", dest="out_file",
                         default="receivers.json",
                         help="Output file. Default:"
-    PARSER.add_argument("--nospam",
-                        dest="no_spam",
+                             "receivers.json")
+    PARSER.add_argument("--obfuscate",
+                        dest="obfuscate",
                         default=False,
                         action="store_true",
                         help="Obfuscate email addresses (truncate addresses after '@').")
@@ -44,8 +45,8 @@ if __name__ == "__main__":
     receiverdb = {'receivers': parse_receiver_list(page),
                   'timestamp': timestamp.isoformat()}
 
-    if ARGS.no_spam:
-        print("Obfuscate email addresses.")
+    if ARGS.obfuscate:
+        print("Obfuscate email addresses")
         receiverdb = obfuscate_addresses(receiverdb)
 
     print("Save to {}".format(ARGS.out_file))
