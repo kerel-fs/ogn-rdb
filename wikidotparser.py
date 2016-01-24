@@ -2,17 +2,17 @@ import re
 from collections import defaultdict
 
 photos_base_url = 'http://openglidernetwork.wdfiles.com'
-# TODO: Fix Poland and Slovkia.
 
-# Known to be broken:
-# receiver_pattern = re.compile("""\|\| \|\| ?\[\[# (.*)\]\](?:.*) \|\|(.*)\|\|(.*)\|\|(?:.*)\|\|((?:.*)\|\||)(.*)\|\|""")
-
-# Goal: at least 486 stations in 22 countries (November 2015)
 heading_pattern = re.compile("""\+\+ (.*) ?\[\[(.*)\n""")
 receiver_pattern = re.compile("""\|\| \|\| ?\[\[# (.*)\]\](?:.*) \|\|(.*)\|\|(.*)\|\|(?:.*)\|\|(?:.*)\|\|(.*)\|\|""")
 mail_pattern = re.compile(""".*\[\[\[mailto:(.*)(\?.*\| )| *(.*) *\]\]\]""")
 photos_pattern = re.compile('\\[\\*(?P<url>[^ \\[\\]]*) (?P<name>[^ \\[\\]]*)\\]')
 
+
+# TODO:
+# - Parse Poland and Slovakia (table scheme differs)
+# - Detect hidden stations (like UKELY)
+# - Handle contact information of Sebs stations
 def parse_contact(raw):
     contact = ""
     mailmatch = re.match(mail_pattern, raw)
@@ -20,11 +20,9 @@ def parse_contact(raw):
         contact = mailmatch.group(1)
     else:
         if "/contact Seb" in raw:
-            # TODO: Catch Sebs stations
             contact = raw
         else:
             if "UKELY" in raw:
-                # TODO: Catch this hidden stations
                 pass
             contact = raw.replace("&nbsp;", "").replace("[", "").replace("]", "").replace("|", "").strip()
     return contact
