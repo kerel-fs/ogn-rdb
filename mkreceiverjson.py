@@ -6,7 +6,10 @@ from datetime import datetime
 from argparse import ArgumentParser
 
 from wikidotparser import parse_receiver_list
+from wikidotcrawler import fetch_page
 
+wiki_url = 'http://wiki.glidernet.org/ajax-module-connector.php'
+page_ids = {'list-of-receivers': 22120125}
 
 def process_list(page, timestamp):
     receivers = parse_receiver_list(page)
@@ -29,8 +32,8 @@ def save_data(receiverdb, out_file):
 
 
 if __name__ == "__main__":
-    PARSER = ArgumentParser(description="""Fetch receiver-list from wiki.glidernet.org
-                                           and write the data into an JSON-file.""")
+    PARSER = ArgumentParser(description="""Fetch list-of-receivers from wiki.glidernet.org
+                                           and output it into a (machine-readable) file.""")
 
     PARSER.add_argument("--out","-o",
                         metavar="OUT_FILE", dest="out_file",
@@ -38,10 +41,6 @@ if __name__ == "__main__":
                         help="Output file. Default:"
                              "receiver-wiki.json")
 
-    PARSER.add_argument("--in","-i",
-                        metavar="IN_FILE", dest="in_file",
-                        default="list-of-receivers.wikidot",
-                        help="Alternative local input file.")
 
     PARSER.add_argument("--nospam",
                         dest="no_spam",
@@ -52,10 +51,9 @@ if __name__ == "__main__":
 
     ARGS = PARSER.parse_args()
 
-    print("Open page %s from file." % ARGS.in_file)
-    with open(ARGS.in_file, 'r') as f:
-        page = f.read()
-    timestamp = datetime.fromtimestamp(os.path.getmtime(ARGS.in_file)).replace(microsecond=0)
+    print("Fetch {}".format(wiki_url))
+    page = fetch_page(wiki_url, page_ids['list-of-receivers'])
+    timestamp = datetime.utcnow().replace(microsecond=0)
 
     print("Parse wiki page.")
     receiverdb = process_list(page, timestamp)
