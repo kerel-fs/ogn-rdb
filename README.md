@@ -6,32 +6,35 @@ returns the list-of-receivers in a machine-readable format (see [data format](#d
 ## Installation
 
 - Install dependencies
+
   ```
-    pip install -r requirements.txt
+  pip install -r requirements.txt
   ```
 
 ## Usage
 
 - mkreceiverjson.py
+
   Fetch the list-of-receivers from wiki.glidernet.org and output it
   into a (machine-readable) file `receivers.json`.
 
-  ```bash
-    mkreceiverjson.py --out receivers.json --obfuscate
+  ```
+  mkreceiverjson.py --out receivers.json --obfuscate
   ```
 
 - mkstatistics.py
+
   Generate some statistics from `receivers.json`.
 
-  ```bash
-    mkstatistics.py --in receivers.json
+  ```
+  mkstatistics.py --in receivers.json
   ```
 
 ## Data format
 
 ### receiver-wiki.json
 
-```json
+```
 { 'receivers': {
      id: { 'description': string,
            'photos': [string, ...],
