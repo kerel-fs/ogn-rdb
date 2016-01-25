@@ -1,30 +1,44 @@
 # OGN Receiver Database
 
 A parser for <http://wiki.glidernet.org/list-of-receivers>,
-it returns json-formatted output.
+returns the list-of-receivers in a machine-readable format (see [data format](#data-format)).
 
-## Modules
-### mkreceiverjson.py
-Parse the list of receivers from a dump of wiki.glidernet.org.
-The retrieved information is saved as `receiver-wiki.json`.
+## Installation
 
-### mkstatistics.py
-Generate some statistics for stations in a `receiver-wiki.json`-file.
+- Install dependencies
+  ```
+    pip install -r requirements.txt
+  ```
 
-### Library
-- wikidotparser.py
+## Usage
 
-## Data Format
+- mkreceiverjson.py
+  Fetch the list-of-receivers from wiki.glidernet.org and output it
+  into a (machine-readable) file `receivers.json`.
+
+  ```bash
+    mkreceiverjson.py --out receivers.json --obfuscate
+  ```
+
+- mkstatistics.py
+  Generate some statistics from `receivers.json`.
+
+  ```bash
+    mkstatistics.py --in receivers.json
+  ```
+
+## Data format
+
 ### receiver-wiki.json
 
-```
-{'receivers': {
-    id: {'description': string,
-         'photos': [string, ...],
-         'contact': string,
-         'country': string
-        },
-    ...
+```json
+{ 'receivers': {
+     id: { 'description': string,
+           'photos': [string, ...],
+           'contact': string,
+           'country': string
+         },
+     ...
   },
   'timestamp': isoformat
 }
