@@ -36,11 +36,11 @@ returns the list-of-receivers in a machine-readable format (see [data format](#d
 
 ```
 { 'receivers': {
-     id: { 'description': string,
-           'photos': [string, ...],
-           'contact': string,
-           'country': string
-         },
+     aprs_name: { 'description': string,
+                  'photos': [string, ...],
+                  'contact': string,
+                  'country': string
+                },
      ...
   },
   'timestamp': isoformat
