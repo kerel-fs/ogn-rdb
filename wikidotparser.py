@@ -73,14 +73,15 @@ def parse_receiver_list(page):
         else:
             data[country].append(line)
 
-    stations = {}
+    receivers = []
     # Parse lines
     for country, lines in data.items():
         for line in lines:
             match = re.match(receiver_pattern, line)
             if match:
-                stations[match.group('aprsname')] = {'description': match.group('desc').replace('&nbsp;', '').strip(),
-                                                     'photos': parse_photo_links(match.group('photos')),
-                                                     'contact': parse_contact(match.group('contact'), match.group('aprsname')),
-                                                     'country': country}
-    return stations
+                receivers.append({'callsign': match.group('aprsname'),
+                                 'description': match.group('desc').replace('&nbsp;', '').strip(),
+                                 'photos': parse_photo_links(match.group('photos')),
+                                 'contact': parse_contact(match.group('contact')),
+                                 'country': country})
+    return receivers
