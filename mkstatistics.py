@@ -6,20 +6,23 @@ from argparse import ArgumentParser
 
 """
 Generate statistics for receivers.json
+
+Equivalent:
+cat receivers.json | jq ".receivers | group_by(.country) | map({(.[0].country): [.[].callsign]})"
 """
 
 
-def print_stats(stations):
-    stat_by_country = defaultdict(dict)
-    for s in stations:
-        stat_by_country[stations[s]['country']][s] = stations[s]
+def print_stats(all_receivers):
+    receivers_by_country = defaultdict(list)
+    for receiver in all_receivers:
+        receivers_by_country[receiver["country"]].append(receiver)
 
-    for c in stat_by_country:
-        print("Found %i stations in %s" % (len(stat_by_country[c]), c))
-        for s in stat_by_country[c]:
-            print(" - %s" % s)
+    for country, receivers in receivers_by_country.items():
+        print('Found {} receivers in {}'.format(len(receiver), country))
+        for receiver in receivers:
+            print(' - {}'.format(receiver["callsign"]))
 
-    print("Parsed %i stations in %i countries." % (len(stations), len(stat_by_country)))
+    print('Found {} receivers in {} countries.'.format(len(all_receivers), len(receivers_by_country)))
 
 
 if __name__ == "__main__":
@@ -35,5 +38,8 @@ if __name__ == "__main__":
     with open(ARGS.in_file) as f:
         receiverdb = json.load(f)
 
-    stations = receiverdb['receivers']
-    print_stats(stations)
+    if receiverdb['version'] == "0.2.0":
+        receivers = receiverdb['receivers']
+        print_stats(receivers)
+    else:
+        print("Unsupported receiverlist version ({}).".format(receiverdb['version']))
