@@ -32,22 +32,24 @@ returns the list-of-receivers in a machine-readable format (see [data format](#d
 
 ## Data format
 
-### receiver-wiki.json
+### receivers.json
 
+Specification: [receiverlist-schema-0.2.0](receiverlist-schema-0.2.0.json)
+
+Example:
 ```
 { 'receivers':
   [
     {
-      'callsign': string,
-      'description': string,
-      'photos': [string, ...],
-      'contact': string,
-      'country': string
+      'callsign': "N0CALL",
+      'description': "An OGN receiver located on planet earth",
+      'photos': ["https://example.com/ogn/receiver-photo.jpg"],
+      'contact': "ogn@example.com",
+      'country': "None"
     },
-    ...
   ],
   },
-  'timestamp': isoformat,
+  'timestamp': "2016-02-04T11:11:11",
   'version': '0.2.0'
 }
 ```
