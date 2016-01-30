@@ -1,7 +1,7 @@
 # OGN Receiver Database
 
 A parser for <http://wiki.glidernet.org/list-of-receivers>,
-returns the list-of-receivers in a machine-readable format (see [data format](#data-format)).
+returns the list-of-receivers in a machine-readable [format](#data-format)).
 
 ## Installation
 
