@@ -3,16 +3,18 @@ from collections import defaultdict
 
 photos_base_url = 'http://openglidernetwork.wdfiles.com'
 
-heading_pattern = re.compile("""\+\+ (.*) ?\[\[(.*)\n""")
-receiver_pattern = re.compile("""\|\| \|\| ?\[\[# (.*)\]\](?:.*) \|\|(.*)\|\|(.*)\|\|(?:.*)\|\|(?:.*)\|\|(.*)\|\|""")
+heading_pattern = re.compile(r'\+\+ (?P<text>.*) ?\[\[(?P<tag>.*)\n')
+receiver_pattern = re.compile(r"""\|\|\ \|\|\ ?\[\[\#\ (?P<aprsname>.*)\]\](?:.*)
+                                  \|\|(?P<desc>.*)
+                                  \|\|(?P<photos>.*)
+                                  \|\|(?:.*)
+                                  \|\|(?:.*)
+                                  \|\|(?P<contact>.*)\|\|""", re.MULTILINE | re.VERBOSE)
 mail_pattern = re.compile(""".*\[\[\[mailto:(.*)(\?.*\| )| *(.*) *\]\]\]""")
-photos_pattern = re.compile('\\[\\*(?P<url>[^ \\[\\]]*) (?P<name>[^ \\[\\]]*)\\]')
+
+photos_pattern = re.compile(r'\[\*(?P<photo_url>[^ \[\]]*) (?P<name>[^ \[\]]*)\]')
 
 
-# TODO:
-# - Parse Poland and Slovakia (table scheme differs)
-# - Detect hidden stations (like UKELY)
-# - Handle contact information of Sebs stations
 def parse_contact(raw):
     contact = ""
     mailmatch = re.match(mail_pattern, raw)
@@ -29,35 +31,35 @@ def parse_contact(raw):
 
 
 def parse_photo_links(raw):
-    links = re.findall(photos_pattern, raw)
     photos = []
-    if links:
-        for link in links:
-            if link[0].startswith('/local--files'):
-                photos.append('{}/{}'.format(photos_base_url, link[0]))
-            else:
-                photos.append(link[0])
+    for link in re.finditer(photos_pattern, raw):
+        if link.group('photo_url').startswith('/local--files'):
+            photos.append('{}/{}'.format(photos_base_url, link.group('photo_url')))
+        else:
+            photos.append(link.group('photo_url'))
     return photos
 
 
 def parse_receiver_list(page):
-    # Seperate list by headings (country)
-    country = "None"
+    country = 'None'
     data = defaultdict(list)
+
+    # Seperate lines by heading (country)
     for line in page.splitlines(True):
         heading = re.search(heading_pattern, line)
         if heading:
-            country = heading.group(1).strip().lower()
+            country = heading.group('text').strip().lower()
         else:
             data[country].append(line)
 
-    # Parse receiver lists
     stations = {}
-    for country in data:
-        rawstations = re.findall(receiver_pattern, "".join(data[country]))
-        for rawstation in rawstations:
-            stations[rawstation[0]] = {"description": rawstation[1].replace("&nbsp;", "").strip(),
-                                       "photos": parse_photo_links(rawstation[2]),
-                                       "contact": parse_contact(rawstation[3]),
-                                       "country": country}
+    # Parse lines
+    for country, lines in data.items():
+        for line in lines:
+            match = re.match(receiver_pattern, line)
+            if match:
+                stations[match.group('aprsname')] = {'description': match.group('desc').replace('&nbsp;', '').strip(),
+                                                     'photos': parse_photo_links(match.group('photos')),
+                                                     'contact': parse_contact(match.group('contact'), match.group('aprsname')),
+                                                     'country': country}
     return stations
