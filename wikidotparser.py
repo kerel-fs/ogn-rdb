@@ -10,24 +10,45 @@ receiver_pattern = re.compile(r"""\|\|\ \|\|\ ?\[\[\#\ (?P<aprsname>.*)\]\](?:.*
                                   \|\|(?:.*)
                                   \|\|(?:.*)
                                   \|\|(?P<contact>.*)\|\|""", re.MULTILINE | re.VERBOSE)
-mail_pattern = re.compile(""".*\[\[\[mailto:(.*)(\?.*\| )| *(.*) *\]\]\]""")
 
 photos_pattern = re.compile(r'\[\*(?P<photo_url>[^ \[\]]*) (?P<name>[^ \[\]]*)\]')
 
+contact_mail_pattern = re.compile(r'\[\[\[mailto:(?P<email>[^?]*)(?:.*)\|(?P<name>.*)\]\]\]')
+contact_url_pattern = re.compile(r'\[\[\[(?P<url>http.*)\|(?P<name>.*)\]\]\]')
+contact_intern_pattern = re.compile(r"""\[\/contact\ (?P<name0>\S*)
+                                        (
+                                          \]\ \/\ \[\/contact\ (?P<name1>.*)\] |
+                                          \]\ \/\ (?P<name2>.*) |
+                                          \]
+                                        )""", re.MULTILINE | re.VERBOSE)
+
 
 def parse_contact(raw):
-    contact = ""
-    mailmatch = re.match(mail_pattern, raw)
-    if mailmatch:
-        contact = mailmatch.group(1)
+    contact_infos = {}
+    raw = raw.replace("&nbsp;", "")
+
+    match_mail = re.search(contact_mail_pattern, raw)
+    match_url = re.search(contact_url_pattern, raw)
+    match_intern = re.search(contact_intern_pattern, raw)
+
+    if match_mail:
+        # found an email address
+        contact = match_mail.group('email')
+    elif match_url:
+        # found a hyperlink
+        contact = match_url.group('url')
+    elif match_intern:
+        # found a link to the wiki page '/contact'
+        contact = ' / '.join(name for name in match_intern.groupdict().values() if (name is not None))
     else:
-        if "/contact Seb" in raw:
-            contact = raw
+        name = raw.replace("[", "").replace("]", "").replace("|", "").strip()
+        if name:
+            # found a name
+            contact = name
         else:
-            if "UKELY" in raw:
-                pass
-            contact = raw.replace("&nbsp;", "").replace("[", "").replace("]", "").replace("|", "").strip()
-    return contact
+            # found nothing
+            contact = ''
+    return contact.strip()
 
 
 def parse_photo_links(raw):
