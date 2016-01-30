@@ -1,0 +1,7 @@
+# Data file
+receivers.json
+
+# Python
+*.pyc
+__pycache__/
+env/
