@@ -54,6 +54,13 @@ Example:
 }
 ```
 
+## Data analysis ([jq](https://stedolan.github.io/jq/) required)
+
+Show all receiver callsigns, grouped by country:
+```
+cat receivers.json | jq ".receivers | group_by(.country) | map({(.[0].country): [.[].callsign]})"
+```
+
 ## License
 
 Licensed under the [AGPLv3](LICENSE) or later.
