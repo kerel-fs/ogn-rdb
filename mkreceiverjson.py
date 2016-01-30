@@ -14,15 +14,6 @@ page_ids = {'list-of-receivers': 22120125}
 RECEIVERLIST_VERSION = '0.2.0'
 
 
-def obfuscate_addresses(receiverdb):
-    receivers = receiverdb['receivers']
-    for s in receivers:
-        if receivers[s]['contact']:
-            receivers[s].update({'contact': "%s@..." % (receivers[s]['contact'].split('@')[0])})
-    receiverdb.update({'receivers': receivers})
-    return receiverdb
-
-
 if __name__ == "__main__":
     PARSER = ArgumentParser(description="""Fetch list-of-receivers from wiki.glidernet.org
                                            and output it into a (machine-readable) file.""")
@@ -50,7 +41,9 @@ if __name__ == "__main__":
 
     if ARGS.obfuscate:
         print("Obfuscate email addresses")
-        receiverdb = obfuscate_addresses(receiverdb)
+        for receiver in receiverdb['receivers']:
+            receiver.update({'contact': "{}".format(receiver['contact'].split('@')[0])})
+
 
     print("Save to {}".format(ARGS.out_file))
     with open(ARGS.out_file, 'w') as f:
