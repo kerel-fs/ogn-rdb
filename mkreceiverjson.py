@@ -11,6 +11,8 @@ from wikidotcrawler import fetch_page
 wiki_url = 'http://wiki.glidernet.org/ajax-module-connector.php'
 page_ids = {'list-of-receivers': 22120125}
 
+RECEIVERLIST_VERSION = '0.2.0'
+
 
 def obfuscate_addresses(receiverdb):
     receivers = receiverdb['receivers']
@@ -42,7 +44,8 @@ if __name__ == "__main__":
     timestamp = datetime.utcnow().replace(microsecond=0)
 
     print("Parse list-of-receivers")
-    receiverdb = {'receivers': parse_receiver_list(page),
+    receiverdb = {'version': RECEIVERLIST_VERSION,
+                  'receivers': parse_receiver_list(page),
                   'timestamp': timestamp.isoformat()}
 
     if ARGS.obfuscate:

@@ -47,10 +47,11 @@ returns the list-of-receivers in a machine-readable format (see [data format](#d
     ...
   ],
   },
-  'timestamp': isoformat
+  'timestamp': isoformat,
+  'version': '0.2.0'
 }
 ```
 
-# License
+## License
 
 Licensed under the [AGPLv3](LICENSE) or later.
