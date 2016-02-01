@@ -3,13 +3,23 @@
 A parser for <http://wiki.glidernet.org/list-of-receivers>,
 returns the list-of-receivers in a machine-readable [format](#data-format).
 
-## Installation
+## Requirements
 
-- Install dependencies
+These scripts are written in python3 and need the python3-requests package.
+If [pip](https://pip.pypa.io/en/stable/quickstart/) for python3 is availabe,
+this dependency could be installed by
 
-  ```
-  pip install -r requirements.txt
-  ```
+```
+pip install -r requirements.txt
+```
+
+### Debian
+
+On Debian the dependencies could be installed by
+
+```
+sudo apt-get install python3 python3-requests
+```
 
 ## Usage
 
@@ -58,7 +68,7 @@ Example:
 
 Show all receiver callsigns, grouped by country:
 ```
-cat receivers.json | jq ".receivers | group_by(.country) | map({(.[0].country): [.[].callsign]})"
+cat receivers.json | jq ".receivers | group_by(.country) | map({(.[0].country): [.[].callsign]}) | add"
 ```
 
 ## License
