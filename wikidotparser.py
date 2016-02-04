@@ -11,7 +11,7 @@ receiver_pattern = re.compile(r"""\|\|\ \|\|\ ?\[\[\#\ (?P<aprsname>.*)\]\](?:.*
                                   \|\|(?:.*)
                                   \|\|(?P<contact>.*)\|\|""", re.MULTILINE | re.VERBOSE)
 
-photos_pattern = re.compile(r'\[\*(?P<photo_url>[^ \[\]]*) (?P<name>[^ \[\]]*)\]')
+photos_pattern = re.compile(r'\[\*?(?P<photo_url>[^\ \[\]]*)\ (?P<name>[^\ \[\]]*)\]')
 
 contact_mail_pattern = re.compile(r'\[\[\[mailto:(?P<email>[^?]*)(?:.*)\|(?P<name>.*)\]\]\]')
 contact_url_pattern = re.compile(r'\[\[\[(?P<url>http.*)\|(?P<name>.*)\]\]\]')
