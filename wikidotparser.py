@@ -8,7 +8,6 @@ receiver_pattern = re.compile(r"""\|\|\ \|\|\ ?\[\[\#\ (?P<aprsname>.*)\]\](?:.*
                                   \|\|(?P<desc>.*)
                                   \|\|(?P<photos>.*)
                                   \|\|(?:.*)
-                                  \|\|(?:.*)
                                   \|\|(?P<contact>.*)\|\|""", re.MULTILINE | re.VERBOSE)
 
 photos_pattern = re.compile(r'\[\*?(?P<photo_url>[^\ \[\]]*)\ (?P<name>[^\ \[\]]*)\]')
