@@ -1,91 +1,15 @@
-<html ng-app="ognrdb">
+<html ng-app="ognrdbApp">
   <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="index.css">
 
-     <link rel="stylesheet" href="index.css">
-     <script src="index.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js" type="text/javascript"></script>
+    <script src="js/app.js" type="text/javascript"></script>
+    <script src="js/controllers.js" type="text/javascript"></script>
   </head>
   <body>
-    <div class="container-fluid" ng-controller="receiversTable">
-      <div class="row">
-        <div class="jumbotron">
-          <h1>OGN list of receivers</h1>
-          <p>
-            The <a href="http://wiki.glidernet.org" target="_blank">OpenGliderNetwork</a> is a centralized network focused on tracking
-            of aircrafts equipped with <a href="https://flarm.com">FLARM</a>, FLARM-compatible devices or
-            <a href="http://wiki.glidernet.org/ogn-tracker">OGN tracker</a>.
-            This page shows all registered OGN receivers.
-          </p>
-          <a href="about.html">About</a>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <p class="text-right">
-            Last update from <a href="http://wiki.glidernet.org/list-of-receivers" target=_blank">wiki.glidernet.org</a> (hourly): {{receiversdb.timestamp}}
-          </p>
-        </div>
-      </div>
-      <div class="row">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <td>#</td>
-              <td>Callsign</td>
-              <td>Description</td>
-              <td>Status</td>
-              <td></td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="clickable" ng-repeat-start="receiver in receiversdb.receivers" ng-click="toggle(receiver)">
-              <td>{{$index +1}}</td>
-              <td>{{receiver.callsign}}</td>
-              <td>{{receiver.description}}</td>
-              <td><img ng-src="http://ognrange.onglide.com/perl/availability.pl?station={{receiver.callsign}}"/></td>
-              <td>
-                <span class="glyphicon glyphicon-menu-right" aria-hidden="true" ng-show="!receiver.showDetails"></span>
-                <span class="glyphicon glyphicon-menu-down" aria-hidden="true" ng-show="receiver.showDetails"></span>
-              </td>
-            </tr>
-            <tr ng-repeat-end ng-show="receiver.showDetails">
-              <td colspan='5'>
-                <div>
-                    <p>{{receiver.description}}</p>
-                    <div class="row">
-                      <div class="col-md-4" ng-repeat="photo in receiver.photos">
-                        <a href="{{photo}}" class="thumbnail"><img ng-src="{{photo}}"style="width:150px;height:150px"/></a>
-                      </div>
-                    </div>
-                    <p ng-hide="!receiver.contact">
-                        Contact: <a href="mailto:{{receiver.contact}}">{{receiver.contact}}</a>
-                    </p>
-<!--
-                  <h2>Community Networks v4</h2>
-                  <p ng-show="connection.currentbgp.v4.error" class="text-warning">{{connection.currentbgp.v4.error}}</p>
-                  <div ng-hide="connection.currentbgp.v4.error">
-                    <h3>Routen:</h3>
-                    <ul class="list-unstyled">
-                    <li ng-repeat="route in connection.currentbgp.v4.routes">
-                      <span>{{route}} </span>
-                      <span ng-class="{ 'label label-success' : connection.networks.ipv4.indexOf(route) > -1, 'label label-info' : connection.networks.ipv4.indexOf(route) == -1 }">in table</span>
-                    </li>
-                    </ul>
-                    <ul class="list-unstyled">
-                      <li ng-repeat="network in connection.networks.ipv4 | unroutedNetworks:connection.currentbgp.v4.routes">
-                        <span>{{network}} </span><span class="label label-warning">not in table</span>
-                      </li>
-                    </ul>
-                  </div>
--->
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <div ng-view></div>
   </body>
-</html
+</html>

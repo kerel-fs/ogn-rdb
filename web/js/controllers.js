@@ -1,6 +1,6 @@
-var ognrdb = angular.module('ognrdb',[]);
+var ognrdbControllers = angular.module('ognrdbControllers', []);
 
-ognrdb.controller('receiversTable', function($scope, $http) {
+ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http) {
   $http.get("https://ogn.peanutpod.de/receivers.json")
         .success(function (data) {
             $scope.receiversdb = data;
