@@ -50,22 +50,6 @@
                 <p ng-hide="!receiver.contact">
                     Contact: <a href="mailto:{{receiver.contact}}">{{receiver.contact}}</a>
                 </p>
-
-              <h2>Community Networks v4</h2>
-              <p ng-show="connection.currentbgp.v4.error" class="text-warning">{{connection.currentbgp.v4.error}}</p>
-              <div ng-hide="connection.currentbgp.v4.error">
-                <h3>Routen:</h3>
-                <ul class="list-unstyled">
-                <li ng-repeat="route in connection.currentbgp.v4.routes">
-                  <span>{{route}} </span>
-                  <span ng-class="{ 'label label-success' : connection.networks.ipv4.indexOf(route) > -1, 'label label-info' : connection.networks.ipv4.indexOf(route) == -1 }">in table</span>
-                </li>
-                </ul>
-                <ul class="list-unstyled">
-                  <li ng-repeat="network in connection.networks.ipv4 | unroutedNetworks:connection.currentbgp.v4.routes">
-                    <span>{{network}} </span><span class="label label-warning">not in table</span>
-                  </li>
-                </ul>
               </div>
           </div>
         </td>
