@@ -11,7 +11,7 @@ from wikidotcrawler import fetch_page
 wiki_url = 'http://wiki.glidernet.org/ajax-module-connector.php'
 page_ids = {'list-of-receivers': 22120125}
 
-RECEIVERLIST_VERSION = '0.2.0'
+RECEIVERLIST_VERSION = '0.2.1'
 
 
 if __name__ == "__main__":
@@ -42,7 +42,7 @@ if __name__ == "__main__":
     if ARGS.obfuscate:
         print("Obfuscate email addresses")
         for receiver in receiverdb['receivers']:
-            receiver.update({'contact': "{}".format(receiver['contact'].split('@')[0])})
+            receiver.update({'email': ''})
 
 
     print("Save to {}".format(ARGS.out_file))
