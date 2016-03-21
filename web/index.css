@@ -1,0 +1,14 @@
+/* Receiver Details */
+.receiver-details dd {
+    margin-top: 10px;
+}
+
+.receiver-details dt {
+    margin-top: 10px;
+}
+
+.receiver-image {
+    width: 200px;
+    float: right;
+    border-radius: 5px;
+}

@@ -10,6 +10,10 @@ ognrdbApp.config(['$routeProvider',
         templateUrl: 'partials/receiver-list.html',
         controller: 'ReceiverListCtrl'
       }).
+      when('/receivers/:callsign', {
+        templateUrl: 'partials/receiver-detail.html',
+        controller: 'ReceiverDetailCtrl'
+      }).
       otherwise({
         redirectTo: '/receivers'
       });
