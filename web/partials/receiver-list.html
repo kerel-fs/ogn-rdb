@@ -1,53 +1,51 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="jumbotron">
-      <h1>OGN list of receivers</h1>
-      <p>
-        The <a href="http://wiki.glidernet.org" target="_blank">OpenGliderNetwork</a> is a centralized network focused on tracking
-        of aircrafts equipped with <a href="https://flarm.com">FLARM</a>, FLARM-compatible devices or
-        <a href="http://wiki.glidernet.org/ogn-tracker">OGN tracker</a>.
-        This page shows all registered OGN receivers.
-      </p>
-      <a href="about.html">About</a>
-    </div>
+<div class="row">
+  <div class="jumbotron">
+    <h1>OGN list of receivers</h1>
+    <p>
+      The <a href="http://wiki.glidernet.org" target="_blank">OpenGliderNetwork</a> is a centralized network focused on tracking
+      of aircrafts equipped with <a href="https://flarm.com">FLARM</a>, FLARM-compatible devices or
+      <a href="http://wiki.glidernet.org/ogn-tracker">OGN tracker</a>.
+      This page shows all registered OGN receivers.
+    </p>
+    <a href="about.html">About</a>
   </div>
-  <div class="row">
-    <div class="col-md-12">
-      <p class="text-right">
-        Last update from <a href="http://wiki.glidernet.org/list-of-receivers" target=_blank">wiki.glidernet.org</a> (hourly): {{receiversdb.timestamp}}
-      </p>
-    </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <p class="text-right">
+      Last update from <a href="http://wiki.glidernet.org/list-of-receivers" target=_blank">wiki.glidernet.org</a> (hourly): {{receiversdb.timestamp}}
+    </p>
   </div>
-  <div class="row">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <td>#</td>
-          <td>Callsign</td>
-          <td>Description</td>
-          <td>Status</td>
-          <td></td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="clickable" ng-repeat-start="receiver in receiversdb.receivers" ng-click="toggle(receiver)">
-          <td>{{$index +1}}</td>
-          <td><a href="#/receivers/{{receiver.callsign}}">{{receiver.callsign}}</a></td>
-          <td>{{receiver.description}}</td>
-          <td><img ng-src="http://ognrange.onglide.com/perl/availability.pl?station={{receiver.callsign}}"/></td>
-          <td>
-            <span class="glyphicon glyphicon-menu-right" aria-hidden="true" ng-show="!receiver.showDetails"></span>
-            <span class="glyphicon glyphicon-menu-down" aria-hidden="true" ng-show="receiver.showDetails"></span>
-          </td>
-        </tr>
-        <tr ng-repeat-end ng-show="receiver.showDetails">
-          <td colspan='5'>
-            <div>
-                <p>{{receiver.description}}</p>
-                <div class="row">
-                  <div class="col-md-4" ng-repeat="photo in receiver.photos">
-                    <a href="{{photo}}" class="thumbnail"><img ng-src="{{photo}}"style="width:150px;height:150px"/></a>
-                  </div>
+<div class="row">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <td>#</td>
+        <td>Callsign</td>
+        <td>Description</td>
+        <td>Status</td>
+        <td></td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="clickable" ng-repeat-start="receiver in receiversdb.receivers" ng-click="toggle(receiver)">
+        <td>{{$index +1}}</td>
+        <td><a href="#/receivers/{{receiver.callsign}}">{{receiver.callsign}}</a></td>
+        <td>{{receiver.description}}</td>
+        <td><img ng-src="http://ognrange.onglide.com/perl/availability.pl?station={{receiver.callsign}}"/></td>
+        <td>
+          <span class="glyphicon glyphicon-menu-right" aria-hidden="true" ng-show="!receiver.showDetails"></span>
+          <span class="glyphicon glyphicon-menu-down" aria-hidden="true" ng-show="receiver.showDetails"></span>
+        </td>
+      </tr>
+      <tr ng-repeat-end ng-show="receiver.showDetails">
+        <td colspan='5'>
+          <div>
+              <p>{{receiver.description}}</p>
+              <div class="row">
+                <div class="col-md-4" ng-repeat="photo in receiver.photos">
+                  <a href="{{photo}}" class="thumbnail"><img ng-src="{{photo}}"style="width:150px;height:150px"/></a>
+                </div>
                 </div>
                 <p ng-hide="!receiver.contact">
                     Contact: <a href="mailto:{{receiver.contact}}">{{receiver.contact}}</a>
@@ -69,11 +67,10 @@
                   </li>
                 </ul>
               </div>
-
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 </div>
