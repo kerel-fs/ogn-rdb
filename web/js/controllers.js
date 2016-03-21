@@ -5,6 +5,13 @@ ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http) {
         .success(function (data) {
             $scope.receiversdb = data;
         });
+  $http.get("http://ognrange.onglide.com/api/1/stations")
+        .success(function (data) {
+            $scope.receiverstats = {};
+            for (i = 0; i < data.stations.length; i++) {
+                $scope.receiverstats[data.stations[i].s] = data.stations[i];
+            }
+        });
 
   $scope.toggle = function(receiver) {
     receiver.showDetails = !receiver.showDetails;
