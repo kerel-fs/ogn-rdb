@@ -16,29 +16,35 @@
       Last update from <a href="http://wiki.glidernet.org/list-of-receivers" target=_blank">wiki.glidernet.org</a> (hourly): {{receiversdb.timestamp}}
     </p>
   </div>
+</div>
 <div class="row">
+<div class="col-md-12">
   <table class="table table-striped">
     <thead>
-      <tr>
-        <td>#</td>
-        <td>Callsign</td>
-        <td>Description</td>
-        <td>Status</td>
-        <td></td>
-      </tr>
+        <th>#</th>
+        <th>Callsign</th>
+        <th>Contact</th>
+        <th>Status</th>
+        <th></th>
     </thead>
     <tbody>
       <tr class="clickable" ng-repeat-start="receiver in receiversdb.receivers" ng-click="toggle(receiver)">
         <td>{{$index +1}}</td>
         <td><a href="#/receivers/{{receiver.callsign}}">{{receiver.callsign}}</a></td>
-        <td>{{receiver.description}}</td>
-        <td><img ng-src="http://ognrange.onglide.com/perl/availability.pl?station={{receiver.callsign}}"/></td>
+        <td>{{receiver.contact}}</td>
+        <td>
+          <div ng-if="receiverstats[receiver.callsign]">
+            <span class="label label-success" ng-if="receiverstats[receiver.callsign].u == 'U'">up</span>
+            <span class="label label-danger" ng-if="receiverstats[receiver.callsign].u == 'D'">down</span>
+            <span class="label label-warning" ng-if="receiverstats[receiver.callsign].u == 'B'">bouncing</span>
+          </div>
+        </td>
         <td>
           <span class="glyphicon glyphicon-menu-right" aria-hidden="true" ng-show="!receiver.showDetails"></span>
           <span class="glyphicon glyphicon-menu-down" aria-hidden="true" ng-show="receiver.showDetails"></span>
         </td>
       </tr>
-      <tr ng-repeat-end ng-show="receiver.showDetails">
+      <tr ng-repeat-end ng-if="receiver.showDetails">
         <td colspan='5'>
           <div>
               <p>{{receiver.description}}</p>
@@ -46,10 +52,6 @@
                 <div class="col-md-4" ng-repeat="photo in receiver.photos">
                   <a href="{{photo}}" class="thumbnail"><img ng-src="{{photo}}"style="width:150px;height:150px"/></a>
                 </div>
-                </div>
-                <p ng-hide="!receiver.contact">
-                    Contact: <a href="mailto:{{receiver.contact}}">{{receiver.contact}}</a>
-                </p>
               </div>
           </div>
         </td>
