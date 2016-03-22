@@ -44,23 +44,26 @@ sudo apt-get install python3 python3-requests
 
 ### receivers.json
 
-Specification: [receiverlist-schema-0.2.0](receiverlist-schema-0.2.0.json)
+Specification: [receiverlist-schema-0.2.1](receiverlist-schema-0.2.1.json)
 
 Example:
 ```
 { 'receivers':
   [
     {
-      'callsign': "N0CALL",
-      'description': "An OGN receiver located on planet earth",
-      'photos': ["https://example.com/ogn/receiver-photo.jpg"],
-      'contact': "ogn@example.com",
-      'country': "None"
+      "callsign": "N0CALL",
+      "description": "An OGN receiver located on planet earth",
+      "photos": ["https://example.com/ogn/receiver-photo.jpg"],
+      "contact": "John Doe",
+      "email": "ogn@example.com",
+      "country": "None",
+      "links": [{"href": "https://example.com/blog/installed-ogn-receiver-on-earth",
+                 "rel": "Blog"}]
     },
   ],
   },
   'timestamp': "2016-02-04T11:11:11",
-  'version': '0.2.0'
+  'version': '0.2.1'
 }
 ```
 
