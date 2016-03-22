@@ -5,7 +5,7 @@ ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http) {
         .success(function (data) {
             $scope.receiversdb = data;
         });
-  $http.get("http://ognrange.onglide.com/api/1/stations")
+  $http.get("https://ognrange.onglide.com/api/1/stations")
         .success(function (data) {
             $scope.receiverstats = {};
             for (i = 0; i < data.stations.length; i++) {
@@ -26,7 +26,7 @@ ognrdbControllers.controller('ReceiverDetailCtrl', ['$scope', '$routeParams', '$
             $scope.receiver.image = $scope.receiver.photos[0] ? $scope.receiver.photos[0]:'';
         });
 
-    $http.get("http://ognrange.onglide.com/api/1/stations")
+    $http.get("https://ognrange.onglide.com/api/1/stations")
           .success(function (data) {
               receiverstats = {};
               for (i = 0; i < data.stations.length; i++) {
