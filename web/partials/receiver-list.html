@@ -19,18 +19,30 @@
 </div>
 <div class="row">
 <div class="col-md-12">
+  Search: <input ng-model="query">
   <table class="table table-striped">
     <thead>
         <th>#</th>
         <th>Callsign</th>
+        <th>Location</th>
+        <th>Country</th>
         <th>Contact</th>
         <th>Status</th>
         <th></th>
     </thead>
     <tbody>
-      <tr class="clickable" ng-repeat-start="receiver in receiversdb.receivers" ng-click="toggle(receiver)">
+      <tr class="clickable" ng-repeat-start="receiver in receiversdb.receivers | filter:query" ng-click="toggle(receiver)">
         <td>{{$index +1}}</td>
         <td><a href="#/receivers/{{receiver.callsign}}">{{receiver.callsign}}</a></td>
+        <!--          <td><img ng-src="http://ognrange.onglide.com/perl/availability.pl?station={{receiver.callsign}}"/></td>-->
+        <td>
+          <div ng-if="receiverstats[receiver.callsign]">
+            <a href="http://ognrange.onglide.com/#{{receiver.callsign}}">
+              {{ receiverstats[receiver.callsign].lt }}&deg;, {{ receiverstats[receiver.callsign].lg }}&deg;
+            </a>
+          </div>
+        </td>
+        <td>{{receiver.country}}</td>
         <td>{{receiver.contact}}</td>
         <td>
           <div ng-if="receiverstats[receiver.callsign]">
