@@ -15,7 +15,8 @@ wikidot_link_pattern = re.compile(r"\[\*?([^\[\]\ ]*)\ ([^\[\]]*)\]")
 photos_pattern = re.compile(r'\[\*?(?P<photo_url>[^\ \[\]]*)\ (?P<name>[^\ \[\]]*)\]')
 image_url_pattern = re.compile(r".*\.(jpg|png|gif)$", re.IGNORECASE)
 
-contact_mail_pattern = re.compile(r'\[\[\[mailto:(?P<email>[^?]*)(?:.*)\|\ *(?P<name>.*)\]\]\]')
+mail_address_pattern = re.compile(r'^[a-z0-9+\-_%.]+@[a-z0-9+\-_%.]+.[a-z]{2,}$', re.IGNORECASE)
+contact_mail_pattern = re.compile(r'\[\[\[mailto:(?P<email>[^?\ ]*)(?P<subject>.*)\|\ *(?P<name>.*)\]\]\]')
 contact_url_pattern = re.compile(r'\[\[\[(?P<url>http.*)\|(?P<name>.*)\]\]\]')
 contact_intern_pattern = re.compile(r"""\[\/contact\ (?P<name0>\S*)
                                         (
@@ -41,7 +42,7 @@ def parse_contact(raw):
     match_url = re.search(contact_url_pattern, raw)
     match_intern = re.search(contact_intern_pattern, raw)
 
-    if match_mail:
+    if match_mail and re.match(mail_address_pattern, match_mail.group('email')):
         # found an email address
         contact_details = {'name': match_mail.group('name'),
                            'email': match_mail.group('email')}
