@@ -30,6 +30,10 @@ ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http, $q) {
         });
     });
 
+    $scope.in_rdb = function(receiver, options) {
+        return ((receiver && receiver.rdb) || $scope.show_unregistered);
+    };
+
     $scope.toggle = function(receiver) {
       receiver.showDetails = !receiver.showDetails;
     }

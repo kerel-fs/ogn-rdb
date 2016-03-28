@@ -19,7 +19,7 @@
 </div>
 <div class="row">
 <div class="col-md-12">
-  Search: <input ng-model="query">
+  Search: <input ng-model="query" placeholder="e.g. Diapason"><span><input type="checkbox" ng-model="show_unregistered" />Show unregistered</span>
   <table class="table table-striped">
     <thead>
         <th>#</th>
@@ -31,7 +31,7 @@
         <th></th>
     </thead>
     <tbody>
-      <tr class="clickable" ng-repeat-start="receiver in receivers_list | filter:query" ng-click="toggle(receiver)">
+      <tr class="clickable" ng-repeat-start="receiver in receivers_list | filter:in_rdb | filter:query" ng-click="toggle(receiver)">
         <td>{{$index +1}}</td>
         <td><a href="#/receivers/{{receiver.callsign}}">{{receiver.callsign}}</a></td>
         <!--          <td><img ng-src="http://ognrange.onglide.com/perl/availability.pl?station={{receiver.callsign}}"/></td>-->
