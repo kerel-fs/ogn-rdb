@@ -13,7 +13,7 @@
 <div class="row">
   <div class="col-md-12">
     <p class="text-right">
-      Last update from <a href="http://wiki.glidernet.org/list-of-receivers" target=_blank">wiki.glidernet.org</a> (hourly): {{receiversdb.timestamp}}
+      Last update from <a href="http://wiki.glidernet.org/list-of-receivers" target=_blank">wiki.glidernet.org</a> (hourly): {{receiversdb_timestamp}}
     </p>
   </div>
 </div>
@@ -31,24 +31,24 @@
         <th></th>
     </thead>
     <tbody>
-      <tr class="clickable" ng-repeat-start="receiver in receiversdb.receivers | filter:query" ng-click="toggle(receiver)">
+      <tr class="clickable" ng-repeat-start="receiver in receivers_list | filter:query" ng-click="toggle(receiver)">
         <td>{{$index +1}}</td>
         <td><a href="#/receivers/{{receiver.callsign}}">{{receiver.callsign}}</a></td>
         <!--          <td><img ng-src="http://ognrange.onglide.com/perl/availability.pl?station={{receiver.callsign}}"/></td>-->
         <td>
-          <div ng-if="receiverstats[receiver.callsign]">
+          <div ng-if="receiver.stats">
             <a href="http://ognrange.onglide.com/#{{receiver.callsign}}">
-              {{ receiverstats[receiver.callsign].lt }}&deg;, {{ receiverstats[receiver.callsign].lg }}&deg;
+              {{ receiver.stats.lt }}&deg;, {{ receiver.stats.lg }}&deg;
             </a>
           </div>
         </td>
-        <td>{{receiver.country}}</td>
-        <td>{{receiver.contact}}</td>
+        <td>{{receiver.rdb.country}}</td>
+        <td>{{receiver.rdb.contact}}</td>
         <td>
-          <div ng-if="receiverstats[receiver.callsign]">
-            <span class="label label-success" ng-if="receiverstats[receiver.callsign].u == 'U'">up</span>
-            <span class="label label-danger" ng-if="receiverstats[receiver.callsign].u == 'D'">down</span>
-            <span class="label label-warning" ng-if="receiverstats[receiver.callsign].u == 'B'">bouncing</span>
+          <div ng-if="receiver.stats">
+            <span class="label label-success" ng-if="receiver.stats.u == 'U'">up</span>
+            <span class="label label-danger" ng-if="receiver.stats.u == 'D'">down</span>
+            <span class="label label-warning" ng-if="receiver.stats.u == 'B'">bouncing</span>
           </div>
         </td>
         <td>
@@ -59,9 +59,9 @@
       <tr ng-repeat-end ng-if="receiver.showDetails">
         <td colspan='5'>
           <div>
-              <p>{{receiver.description}}</p>
+              <p>{{receiver.rdb.description}}</p>
               <div class="row">
-                <div class="col-md-4" ng-repeat="photo in receiver.photos">
+                <div class="col-md-4" ng-repeat="photo in receiver.rdb.photos">
                   <a href="{{photo}}" class="thumbnail"><img ng-src="{{photo}}"style="width:150px;height:150px"/></a>
                 </div>
               </div>

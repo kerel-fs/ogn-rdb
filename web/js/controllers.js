@@ -1,21 +1,38 @@
 var ognrdbControllers = angular.module('ognrdbControllers', []);
 
-ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http) {
-  $http.get("https://ogn.peanutpod.de/receivers.json")
-        .success(function (data) {
-            $scope.receiversdb = data;
-        });
-  $http.get("https://ognrange.onglide.com/api/1/stations")
-        .success(function (data) {
-            $scope.receiverstats = {};
-            for (i = 0; i < data.stations.length; i++) {
-                $scope.receiverstats[data.stations[i].s] = data.stations[i];
-            }
+ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http, $q) {
+    $scope.receivers = {};
+    receivers_p = $http.get("https://ogn.peanutpod.de/receivers.json")
+        .then(function (response) {
+            $scope.receiversdb_timestamp = response.data.timestamp;
+            angular.forEach(response.data.receivers, function(receiver) {
+                if (!$scope.receivers[receiver.callsign]) {
+                    $scope.receivers[receiver.callsign] = {'callsign':receiver.callsign};
+                }
+                $scope.receivers[receiver.callsign].rdb = receiver;
+            });
         });
 
-  $scope.toggle = function(receiver) {
-    receiver.showDetails = !receiver.showDetails;
-  }
+    ognrange_p = $http.get("https://ognrange.onglide.com/api/1/stations")
+        .then(function (response) {
+            angular.forEach(response.data.stations, function(station) {
+                if (!$scope.receivers[station.s]) {
+                    $scope.receivers[station.s] = {'callsign': station.s};
+                }
+                $scope.receivers[station.s].stats = station;
+            });
+        });
+
+    $q.all([receivers_p, ognrange_p]).then(function (result) {
+        $scope.receivers_list = [];
+        angular.forEach($scope.receivers, function(value, key) {
+            $scope.receivers_list.push(value);
+        });
+    });
+
+    $scope.toggle = function(receiver) {
+      receiver.showDetails = !receiver.showDetails;
+    }
 });
 
 ognrdbControllers.controller('ReceiverDetailCtrl', ['$scope', '$routeParams', '$http',
