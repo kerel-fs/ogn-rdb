@@ -42,13 +42,24 @@ ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http, $q) {
 
     $q.all([receivers_p, ognrange_p, privacy_p]).then(update_receivers);
 
-    $scope.in_rdb = function(receiver, options) {
-        return ((receiver && receiver.rdb) || $scope.show_unregistered);
+    $scope.filter_in_rdb = function(receiver, options) {
+        return ((receiver && receiver.rdb) || $scope.show_rdb_only);
     };
 
-    $scope.toggle = function(receiver) {
-      receiver.showDetails = !receiver.showDetails;
+    $scope.toggle_details = function(receiver) {
+        receiver.showDetails = !receiver.showDetails;
     }
+
+    $scope.ddb_filter_state = "show-all";
+    $scope.filter_respects_ddb = function(receiver) {
+        if ($scope.ddb_filter_state == "show-all") {
+            return true;
+        } else if ($scope.ddb_filter_state == "show-legal") {
+            return (receiver.privacy && receiver.privacy.respects_ddb);
+        } else {
+            return (receiver.privacy && !receiver.privacy.respects_ddb);
+        }
+    };
 });
 
 ognrdbControllers.controller('ReceiverDetailCtrl', ['$scope', '$routeParams', '$http',
