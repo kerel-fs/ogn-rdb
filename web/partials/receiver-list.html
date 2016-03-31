@@ -19,7 +19,8 @@
 </div>
 <div class="row">
 <div class="col-md-12">
-  Search: <input ng-model="query" placeholder="e.g. Diapason"><span><input type="checkbox" ng-model="show_unregistered" />Show unregistered</span>
+  Search: <input ng-model="query" placeholder="e.g. Diapason"><span>
+  <input type="checkbox" ng-model="show_unregistered" />Show unregistered</span>
   <table class="table table-striped">
     <thead>
         <th>#</th>
@@ -28,6 +29,7 @@
         <th>Country</th>
         <th>Contact</th>
         <th>Status</th>
+        <th>Privacy</th>
         <th></th>
     </thead>
     <tbody>
@@ -52,12 +54,18 @@
           </div>
         </td>
         <td>
+          <div ng-if="receiver.privacy">
+            <span class="label label-success" ng-if="receiver.privacy.respects_ddb">ok</span>
+            <span class="label label-danger" ng-if="!receiver.privacy.respects_ddb">!</span>
+          </div>
+        </td>
+        <td>
           <span class="glyphicon glyphicon-menu-right" aria-hidden="true" ng-show="!receiver.showDetails"></span>
           <span class="glyphicon glyphicon-menu-down" aria-hidden="true" ng-show="receiver.showDetails"></span>
         </td>
       </tr>
       <tr ng-repeat-end ng-if="receiver.showDetails">
-        <td colspan='5'>
+        <td colspan='8'>
           <div>
               <p>{{receiver.rdb.description}}</p>
               <div class="row">

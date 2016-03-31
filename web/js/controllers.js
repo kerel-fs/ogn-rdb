@@ -30,6 +30,16 @@ ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http, $q) {
             });
         });
 
+    privacy_p = $http.get("https://ogn.peanutpod.de/receivers-privacy.json")
+        .then(function (response) {
+            angular.forEach(response.data, function(value, key) {
+                if (!$scope.receivers[key]) {
+                    $scope.receivers[key] = {'callsign': key};
+                }
+                $scope.receivers[key].privacy = value;
+            });
+        });
+
     $q.all([receivers_p, ognrange_p, privacy_p]).then(update_receivers);
 
     $scope.in_rdb = function(receiver, options) {
