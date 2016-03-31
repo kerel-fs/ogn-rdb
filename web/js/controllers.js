@@ -2,6 +2,13 @@ var ognrdbControllers = angular.module('ognrdbControllers', []);
 
 ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http, $q) {
     $scope.receivers = {};
+    update_receivers = function() {
+        $scope.receivers_list = [];
+        angular.forEach($scope.receivers, function(value, key) {
+            $scope.receivers_list.push(value);
+        });
+    };
+
     receivers_p = $http.get("https://ogn.peanutpod.de/receivers.json")
         .then(function (response) {
             $scope.receiversdb_timestamp = response.data.timestamp;
@@ -11,7 +18,7 @@ ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http, $q) {
                 }
                 $scope.receivers[receiver.callsign].rdb = receiver;
             });
-        });
+        }).then(update_receivers);
 
     ognrange_p = $http.get("https://ognrange.onglide.com/api/1/stations")
         .then(function (response) {
@@ -23,12 +30,7 @@ ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http, $q) {
             });
         });
 
-    $q.all([receivers_p, ognrange_p]).then(function (result) {
-        $scope.receivers_list = [];
-        angular.forEach($scope.receivers, function(value, key) {
-            $scope.receivers_list.push(value);
-        });
-    });
+    $q.all([receivers_p, ognrange_p, privacy_p]).then(update_receivers);
 
     $scope.in_rdb = function(receiver, options) {
         return ((receiver && receiver.rdb) || $scope.show_unregistered);
