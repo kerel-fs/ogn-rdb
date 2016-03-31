@@ -42,10 +42,14 @@ def parse_contact(raw):
     match_url = re.search(contact_url_pattern, raw)
     match_intern = re.search(contact_intern_pattern, raw)
 
-    if match_mail and re.match(mail_address_pattern, match_mail.group('email')):
-        # found an email address
-        contact_details = {'name': match_mail.group('name'),
-                           'email': match_mail.group('email')}
+    if match_mail:
+        if re.match(mail_address_pattern, match_mail.group('email')):
+            # found an email address
+            contact_details = {'name': match_mail.group('name'),
+                               'email': match_mail.group('email')}
+        else:
+            contact_details = {'name': match_mail.group('name'),
+                               'email': ''}
     elif match_url:
         # found a hyperlink
         links.append({'ref': 'contact', 'href': match_url.group('url')})
