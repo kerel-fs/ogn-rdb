@@ -72,8 +72,12 @@
         </td>
         <td>
           <div ng-if="receiver.privacy">
-            <span class="label label-success" ng-if="receiver.privacy.respects_ddb">ok</span>
-            <span class="label label-danger" ng-if="!receiver.privacy.respects_ddb">!</span>
+            <span class="label label-success" ng-if="receiver.privacy.respects_ddb">
+              <span class="glyphicon glyphicon-ok-sign" ng-if="receiver.privacy.respects_ddb"></span>
+            </span>
+            <span class="label label-danger" ng-if="!receiver.privacy.respects_ddb">
+              <span class="glyphicon glyphicon-warning-sign" ng-if="!receiver.privacy.respects_ddb"></span>
+            </span>
           </div>
         </td>
         <td>
