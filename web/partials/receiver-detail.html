@@ -19,12 +19,14 @@
       <dt class="label label-danger" ng-if="!receiver.aprsc_status && receiver.stats">down since</dt>
       <dd ng-if="!receiver.aprsc_status && receiver.stats">{{ receiver.stats.ut }}</dd>
       <dt class="label label-danger" ng-if="!receiver.aprsc_status && !receiver.stats">down</dt>
+      <dd ng-if="!receiver.aprsc_status && !receiver.stats"></dd>
       <dt class="label label-default" ng-if="receiver.privacy">Devices seen (in DDB/total)</dt>
       <dd ng-if="receiver.privacy">{{ receiver.privacy.received_devices.in_ddb }}/{{ receiver.privacy.received_devices.total }}</dd>
       <dt class="label label-default" ng-if="receiver.rdb.links[0]">Links</dt>
       <dd ng-if="receiver.rdb.links[0]" ng-repeat="link in receiver.rdb.links">
         <a href="{{link.href}}">{{link.rel}}</a>
       </dd>
+      <dd><a href="http://grafana.glidernet.org/dashboard/db/receivers?var-receiver={{ receiver.callsign }}">OGN Receiver statistics (grafana)</a></dd>
     </dl>
   </div>
   <img src="{{receiver.rdb.photos[0]}}" class="receiver-image"/>
