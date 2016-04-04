@@ -17,7 +17,7 @@
           <p>
           The displayed data is parsed from the wiki page <a href="http://wiki.glidernet.org/list-of-receivers">list-of-receivers</a> and updated hourly.
           <br/>
-          Live receiver status is provided by the <a href="http://ognrange.onglide.com/api.html">OGNRange-API</a>.
+          Live receiver status is provided by the aprsc servers directely and historical uptime statistics are provided by OGNRange.
           </p>
           <p>
             For now, email addresses are stripped to prevent spam.
@@ -26,10 +26,11 @@
       </div>
       <div class="row">
         <div class="col-md-12">
+          <h2>Data sources</h2>
           <div class="div panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">
-                  machine-readable data
+                  Receiver database
               </h3>
             </div>
             <div class="panel-body">
@@ -40,12 +41,56 @@
               </p>
             </div>
           </div>
+          <div class="div panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                  APRSC Server Status
+              </h3>
+            </div>
+            <div class="panel-body">
+              <p>
+                Data source: <a href="http://glidern1.glidernet.org:14501/">glidern1</a> and <a href="http://glidern2.glidernet.org:14501/">glidern2</a><br/>
+                Data file: <a href="http://glidern1.glidernet.org:14501/status.json">glidern1/status.json</a> and <a href="http://glidern2.glidernet.org:14501/status.json">glidern2/status.json</a><br/>
+              </p>
+            </div>
+          </div>
+          <div class="div panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                  OGNRange
+              </h3>
+            </div>
+            <div class="panel-body">
+              <p>
+                Data source: <a href="https://ognrange.onglide.com">OGNRange</a><br/>
+                Data format: <a href="https://ognrange.onglide.com/api.html">OGNRange API</a><br/>
+              </p>
+            </div>
+          </div>
+
+
+
+
+          <div class="div panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                  Privacy Stats
+              </h3>
+            </div>
+            <div class="panel-body">
+              <p>
+                Data file: <a href="https://ogn.peanutpod.de/receivers-privacy.json">receivers-privacy.json</a><br/>
+              </p>
+            </div>
+          </div>
+
+
         </div>
       </div>
       <div class="row">
         <div class="col-md-12">
           <p>
-            Contact webmaster: <a href="mailto:kerel-fs@gmx.de">kerel-fs@gmx.de</a><br/>
+            Contact webmaster: <a href="mailto:kerel-fs@gmx.de">kerel</a><br/>
             Source code: <a target="_blank" href="https://github.com/kerel-fs/ogn-rdb">Github Repository</a><br/>
             This web page was forked from <a href="https://github.com/freifunk/icvpn-monitoring">icvpn-monitoring</a>.
           </p>
