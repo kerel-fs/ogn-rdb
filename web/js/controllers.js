@@ -2,6 +2,18 @@ var ognrdbControllers = angular.module('ognrdbControllers', []);
 
 ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http, $q) {
     $scope.receivers = {};
+
+    update_aprsc_status = function (response) {
+        angular.forEach(response.data.clients, function(client) {
+            if (client.app_name == "RTLSDR-OGN") {
+                if (!$scope.receivers[client.username]) {
+                    $scope.receivers[client.username] = {'callsign': client.username};
+                }
+                $scope.receivers[client.username].aprsc_status = client;
+            }
+        });
+    }
+
     update_receivers = function() {
         $scope.receivers_list = [];
         angular.forEach($scope.receivers, function(value, key) {
@@ -18,7 +30,7 @@ ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http, $q) {
                 }
                 $scope.receivers[receiver.callsign].rdb = receiver;
             });
-        }).then(update_receivers);
+        });
 
     ognrange_p = $http.get("https://ognrange.onglide.com/api/1/stations")
         .then(function (response) {
@@ -40,7 +52,14 @@ ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http, $q) {
             });
         });
 
-    $q.all([receivers_p, ognrange_p, privacy_p]).then(update_receivers);
+    glidern1_p = $http.get("https://ogn.peanutpod.de/glidern1/status.json")
+        .then(update_aprsc_status);
+    glidern2_p = $http.get("https://ogn.peanutpod.de/glidern2/status.json")
+        .then(update_aprsc_status);
+
+    intern_p = $q.all([receivers_p, privacy_p, glidern1_p, glidern2_p]).then(update_receivers);
+
+    all_p = $q.all([intern_p, ognrange_p]).then(update_receivers);
 
     $scope.filter_in_rdb = function(receiver, options) {
         return ((receiver && receiver.rdb) || $scope.show_rdb_only);
@@ -62,20 +81,10 @@ ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http, $q) {
     };
 });
 
-ognrdbControllers.controller('ReceiverDetailCtrl', ['$scope', '$routeParams', '$http',
-  function($scope, $routeParams, $http) {
-    $http.get("https://ogn.peanutpod.de/receivers.json")
-        .success(function (data) {
-            $scope.receiver = data.receivers.filter(function (el) { return el.callsign == $routeParams.callsign;})[0];
-            $scope.receiver.image = $scope.receiver.photos[0] ? $scope.receiver.photos[0]:'';
-        });
-
-    $http.get("https://ognrange.onglide.com/api/1/stations")
-          .success(function (data) {
-              receiverstats = {};
-              for (i = 0; i < data.stations.length; i++) {
-                  receiverstats[data.stations[i].s] = data.stations[i];
-              }
-              $scope.stats = receiverstats[$routeParams.callsign];
-          });
+ognrdbControllers.controller('ReceiverDetailCtrl', ['$scope', '$routeParams', '$http', '$controller',
+  function($scope, $routeParams, $http, $controller) {
+    $controller('ReceiverListCtrl', {$scope: $scope});
+    all_p.then(function () {
+        $scope.receiver = $scope.receivers[$routeParams.callsign];
+    });
   }]);

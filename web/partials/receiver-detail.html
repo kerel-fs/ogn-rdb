@@ -3,32 +3,36 @@
   <div class="col-md-6">
     <dl class="dl-horizontal receiver-details">
       <dt class="label label-default">Description</dt>
-      <dd>{{ receiver.description }}</dd>
-      <dt class="label label-default" ng-if="stats">Location</dt>
-      <dd ng-if="stats">
+      <dd>{{ receiver.rdb.description }}</dd>
+      <dt class="label label-default" ng-if="receiver.stats">Location</dt>
+      <dd ng-if="receiver.stats">
         <a href="http://ognrange.onglide.com/#{{receiver.callsign}}">
-          {{ stats.lt }}&deg;, {{ stats.lg }}&deg;
+          {{ receiver.stats.lt }}&deg;, {{ receiver.stats.lg }}&deg;
         </a>
       </dd>
       <dt class="label label-default">Country</dt>
-      <dd>{{ receiver.country }}</dd>
+      <dd>{{ receiver.rdb.country }}</dd>
       <dt class="label label-default">Contact</dt>
-      <dd>{{ receiver.contact }}</dd>
-      <dt class="label label-success" ng-if="stats.u == 'U'">up since</dt>
-      <dt class="label label-danger" ng-if="stats.u == 'D'">down since</dt>
-      <dt class="label label-warning" ng-if="stats.u == 'B'">bouncing since</dt>
-      <dd ng-if="stats.u">{{stats.ut}}</dd>
-      <dt class="label label-default" ng-if="receiver.links[0]">Links</dt>
-      <dd ng-if="receiver.links[0]" ng-repeat="link in receiver.links">
+      <dd>{{ receiver.rdb.contact }}</dd>
+      <dt class="label label-success" ng-if="receiver.aprsc_status">up since</dt>
+      <dd ng-if="receiver.aprsc_status">{{ receiver.aprsc_status.t_connect*1000 | date:'yyyy-MM-dd'}}</dd>
+      <dt class="label label-danger" ng-if="!receiver.aprsc_status && receiver.stats">down since</dt>
+      <dd ng-if="!receiver.aprsc_status && receiver.stats">{{ receiver.stats.ut }}</dd>
+      <dt class="label label-danger" ng-if="!receiver.aprsc_status && !receiver.stats">down</dt>
+      <dt class="label label-default" ng-if="receiver.privacy">Devices seen (in DDB/total)</dt>
+      <dd ng-if="receiver.privacy">{{ receiver.privacy.received_devices.in_ddb }}/{{ receiver.privacy.received_devices.total }}</dd>
+      <dt class="label label-default" ng-if="receiver.rdb.links[0]">Links</dt>
+      <dd ng-if="receiver.rdb.links[0]" ng-repeat="link in receiver.rdb.links">
         <a href="{{link.href}}">{{link.rel}}</a>
       </dd>
     </dl>
   </div>
-  <img src="{{receiver.image}}" class="receiver-image"/>
+  <img src="{{receiver.rdb.photos[0]}}" class="receiver-image"/>
 </div>
 <div class="row">
-  <div class="col-md-4" ng-repeat="photo in receiver.photos">
+  <div class="col-md-4" ng-repeat="photo in receiver.rdb.photos">
     <a href="{{photo}}" class="thumbnail"><img ng-src="{{photo}}"style="width:150px;height:150px"/></a>
   </div>
 </div>
 <a href="#/receivers">back</a>
+<pre>{{ receiver | json }}</pre>
