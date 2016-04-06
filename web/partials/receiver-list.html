@@ -40,17 +40,44 @@
   </form>
   <table class="table table-striped">
     <thead>
-        <th>#</th>
-        <th>Callsign</th>
-        <th>Location</th>
-        <th>Country</th>
-        <th>Contact</th>
-        <th>Status</th>
-        <th title="Green if the DDB-whitelisting were applied in the last 7 days">Privacy</th>
-        <th></th>
+      <th>#</th>
+      <th ng-click="order('callsign')">
+        Callsign
+        <span class="glyphicon"
+              ng-if="predicate=='callsign'"
+              ng-class="{'glyphicon-chevron-up' : reverse, 'glyphicon-chevron-down': !reverse}"></span>
+      </th>
+      <th>Location</th>
+      <th ng-click="order('rdb.country')">
+        Country
+        <span class="glyphicon"
+              ng-if="predicate=='rdb.country'"
+              ng-class="{'glyphicon-chevron-up' : reverse, 'glyphicon-chevron-down': !reverse}"></span>
+      </th>
+      <th ng-click="order('rdb.contact')">
+        Contact
+        <span class="glyphicon"
+              ng-if="predicate=='rdb.contact'"
+              ng-class="{'glyphicon-chevron-up' : reverse, 'glyphicon-chevron-down': !reverse}"></span>
+      </th>
+      <th ng-click="order('aprsc_status')">
+        Status
+        <span class="glyphicon"
+              ng-if="predicate=='aprsc_status'"
+              ng-class="{'glyphicon-chevron-up' : reverse, 'glyphicon-chevron-down': !reverse}"></span>
+      </th>
+      <th ng-click="order('privacy.respects_ddb')" title="Green if the DDB-whitelisting were applied in the last 7 days">
+        Privacy
+        <span class="glyphicon"
+              ng-if="predicate=='privacy.respects_ddb'"
+              ng-class="{'glyphicon-chevron-up' : reverse, 'glyphicon-chevron-down': !reverse}"></span>
+      </th>
+      <th></th>
     </thead>
     <tbody>
-      <tr class="clickable" ng-repeat-start="receiver in receivers_list | filter:filter_in_rdb | filter:query | filter:filter_respects_ddb" ng-click="toggle_details(receiver)">
+      <tr class="clickable"
+          ng-repeat-start="receiver in receivers_list | filter:filter_in_rdb | filter:query | filter:filter_respects_ddb | orderBy:predicate:reverse"
+          ng-click="toggle_details(receiver)">
         <td>{{$index +1}}</td>
         <td><a href="#/receivers/{{receiver.callsign}}">{{receiver.callsign}}</a></td>
         <!--          <td><img ng-src="http://ognrange.onglide.com/perl/availability.pl?station={{receiver.callsign}}"/></td>-->

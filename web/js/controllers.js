@@ -79,6 +79,13 @@ ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http, $q) {
             return (receiver.privacy && !receiver.privacy.respects_ddb);
         }
     };
+
+    $scope.predicate = 'callsign';
+    $scope.reverse = false;
+    $scope.order = function(predicate) {
+      $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+      $scope.predicate = predicate;
+    };
 });
 
 ognrdbControllers.controller('ReceiverDetailCtrl', ['$scope', '$routeParams', '$http', '$controller',
