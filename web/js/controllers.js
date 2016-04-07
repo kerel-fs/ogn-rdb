@@ -5,11 +5,11 @@ ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http, $q) {
 
     update_aprsc_status = function (response) {
         angular.forEach(response.data.clients, function(client) {
-            if (client.app_name == "RTLSDR-OGN") {
-                if (!$scope.receivers[client.username]) {
-                    $scope.receivers[client.username] = {'callsign': client.username};
-                }
+            if ($scope.receivers[client.username]) {
                 $scope.receivers[client.username].aprsc_status = client;
+            } else if (client.app_name == "RTLSDR-OGN" || client.app_name == "ogn-decode" ) {
+                // app_name='ogn-decode' is a bug in a beta version of v0.2.5
+                $scope.receivers[client.username] = {'callsign': client.username};
             }
         });
     }
