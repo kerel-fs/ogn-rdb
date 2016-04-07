@@ -91,7 +91,9 @@ ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http, $q) {
 ognrdbControllers.controller('ReceiverDetailCtrl', ['$scope', '$routeParams', '$http', '$controller',
   function($scope, $routeParams, $http, $controller) {
     $controller('ReceiverListCtrl', {$scope: $scope});
-    all_p.then(function () {
+    update_receiver = function () {
         $scope.receiver = $scope.receivers[$routeParams.callsign];
-    });
+    };
+    intern_p.then(update_receiver);
+    all_p.then(update_receiver);
   }]);
