@@ -56,8 +56,10 @@ ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http, $q) {
         .then(update_aprsc_status);
     glidern2_p = $http.get("https://ogn.peanutpod.de/glidern2/status.json")
         .then(update_aprsc_status);
+    glidern3_p = $http.get("https://ogn.peanutpod.de/glidern3/status.json")
+        .then(update_aprsc_status);
 
-    intern_p = $q.all([receivers_p, privacy_p, glidern1_p, glidern2_p]).then(update_receivers);
+    intern_p = $q.all([receivers_p, privacy_p, glidern1_p, glidern2_p, glidern3_p]).then(update_receivers);
 
     all_p = $q.all([intern_p, ognrange_p]).then(update_receivers);
 
