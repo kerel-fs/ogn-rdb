@@ -9,7 +9,10 @@ from wikidotparser import parse_receiver_list
 from wikidotcrawler import fetch_page
 
 wiki_url = 'http://wiki.glidernet.org/ajax-module-connector.php'
-page_ids = {'list-of-receivers': 22120125}
+page_ids = {'list-of-receivers': 22120125,
+            'list-of-receivers-french' : 45174721,
+            'list-of-receivers-german' : 45177548,
+            'list-of-receivers-uk' : 45177553}
 
 RECEIVERLIST_VERSION = '0.2.1'
 
@@ -30,13 +33,16 @@ if __name__ == "__main__":
                         help="Obfuscate email addresses (truncate addresses after '@').")
     ARGS = PARSER.parse_args()
 
-    print("Fetch {}".format(wiki_url))
-    page = fetch_page(wiki_url, page_ids['list-of-receivers'])
+    print("Fetch and parse lists of receivers")
+    receivers = []
+    for page_id in page_ids.values():
+        page = fetch_page(wiki_url, page_id)
+        receivers += parse_receiver_list(page)
+
     timestamp = datetime.utcnow().replace(microsecond=0)
 
-    print("Parse list-of-receivers")
     receiverdb = {'version': RECEIVERLIST_VERSION,
-                  'receivers': parse_receiver_list(page),
+                  'receivers': receivers,
                   'timestamp': timestamp.isoformat()}
 
     if ARGS.obfuscate:
