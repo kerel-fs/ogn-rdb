@@ -38,7 +38,7 @@ if __name__ == "__main__":
     with open(ARGS.in_file) as f:
         receiverdb = json.load(f)
 
-    if receiverdb['version'] == "0.2.0":
+    if receiverdb['version'][:3] == "0.2":
         receivers = receiverdb['receivers']
         print_stats(receivers)
     else:
