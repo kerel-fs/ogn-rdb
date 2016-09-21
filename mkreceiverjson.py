@@ -9,10 +9,10 @@ from wikidotparser import parse_receiver_list
 from wikidotcrawler import fetch_page
 
 wiki_url = 'http://wiki.glidernet.org/ajax-module-connector.php'
-page_ids = {'list-of-receivers': 22120125,
-            'list-of-receivers-french' : 45174721,
-            'list-of-receivers-german' : 45177548,
-            'list-of-receivers-uk' : 45177553}
+receiver_list_page_ids = {'others': 22120125,
+                          'france' : 45174721,
+                          'germany' : 45177548,
+                          'uk' : 45177553}
 
 RECEIVERLIST_VERSION = '0.2.1'
 
@@ -35,9 +35,16 @@ if __name__ == "__main__":
 
     print("Fetch and parse lists of receivers")
     receivers = []
-    for page_id in page_ids.values():
+
+    for country, page_id in receiver_list_page_ids.items():
         page = fetch_page(wiki_url, page_id)
-        receivers += parse_receiver_list(page)
+        _receivers = parse_receiver_list(page)
+
+        if country != 'others':
+            for receiver in _receivers:
+                receiver.update({'country':country})
+
+        receivers += _receivers
 
     timestamp = datetime.utcnow().replace(microsecond=0)
 
