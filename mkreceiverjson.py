@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import os.path
 import json
 from datetime import datetime
 from argparse import ArgumentParser
@@ -43,7 +42,7 @@ if __name__ == "__main__":
 
         if country != 'others':
             for receiver in _receivers:
-                receiver.update({'country':country})
+                receiver.update({'country': country})
 
         receivers += _receivers
 
@@ -57,7 +56,6 @@ if __name__ == "__main__":
         print("Obfuscate email addresses")
         for receiver in receiverdb['receivers']:
             receiver.update({'email': ''})
-
 
     print("Save to {}".format(ARGS.out_file))
     with open(ARGS.out_file, 'w') as f:
