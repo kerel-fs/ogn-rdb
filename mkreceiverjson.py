@@ -10,9 +10,10 @@ from wikidotcrawler import fetch_page
 
 wiki_url = 'http://wiki.glidernet.org/ajax-module-connector.php'
 receiver_list_page_ids = {'others': 22120125,
-                          'france' : 45174721,
-                          'germany' : 45177548,
-                          'uk' : 45177553}
+                          'france': 45174721,
+                          'germany': 45177548,
+                          'uk': 45177553,
+                          'us': 45426379}
 
 RECEIVERLIST_VERSION = '0.2.1'
 
