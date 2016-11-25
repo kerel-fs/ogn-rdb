@@ -5,7 +5,6 @@ ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http, $q) {
 
     update_aprsc_status = function (response) {
         angular.forEach(response.data.clients, function(client) {
-        	if (! client) return; // Check if aprsc status is invalid
             if ($scope.receivers[client.username]) {
                 $scope.receivers[client.username].aprsc_status = client;
             } else if (client.app_name == "RTLSDR-OGN" || client.app_name == "ogn-decode" ) {
@@ -54,13 +53,13 @@ ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http, $q) {
         });
 
     glidern1_p = $http.get("https://ogn.peanutpod.de/glidern1/status.json")
-        .then(update_aprsc_status);
+        .then(update_aprsc_status).finally();
     glidern2_p = $http.get("https://ogn.peanutpod.de/glidern2/status.json")
-        .then(update_aprsc_status);
+        .then(update_aprsc_status).finally();
     glidern3_p = $http.get("https://ogn.peanutpod.de/glidern3/status.json")
-        .then(update_aprsc_status);
+        .then(update_aprsc_status).finally();
 
-    intern_p = $q.all([receivers_p, privacy_p, glidern1_p, glidern2_p, glidern3_p]).then(update_receivers);
+    intern_p = $q.all([receivers_p, privacy_p, glidern1_p, glidern2_p, glidern3_p]).finally(update_receivers);
 
     all_p = $q.all([intern_p, ognrange_p]).then(update_receivers);
 
