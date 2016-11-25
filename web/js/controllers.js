@@ -2,6 +2,11 @@ var ognrdbControllers = angular.module('ognrdbControllers', []);
 
 ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http, $q) {
     $scope.receivers = {};
+    $scope.loading = true;
+
+    loading_done = function () {
+        $scope.loading = false;
+    };
 
     update_aprsc_status = function (response) {
         angular.forEach(response.data.clients, function(client) {
@@ -59,7 +64,7 @@ ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http, $q) {
     glidern3_p = $http.get("https://ogn.peanutpod.de/glidern3/status.json")
         .then(update_aprsc_status).finally();
 
-    intern_p = $q.all([receivers_p, privacy_p, glidern1_p, glidern2_p, glidern3_p]).finally(update_receivers);
+    intern_p = $q.all([receivers_p, privacy_p, glidern1_p, glidern2_p, glidern3_p]).finally(update_receivers).finally(loading_done);
 
     all_p = $q.all([intern_p, ognrange_p]).then(update_receivers);
 
