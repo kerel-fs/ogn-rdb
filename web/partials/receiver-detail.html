@@ -18,7 +18,9 @@
       <dd ng-if="receiver.aprsc_status">{{ receiver.aprsc_status.t_connect*1000 | date:'yyyy-MM-dd'}}</dd>
       <dt class="label label-danger" ng-if="!receiver.aprsc_status && receiver.stats">down since</dt>
       <dd ng-if="!receiver.aprsc_status && receiver.stats">{{ receiver.stats.ut }}</dd>
-      <dt class="label label-danger" ng-if="!receiver.aprsc_status && !receiver.stats">down</dt>
+      <dt class="label label-danger" ng-if="receiver.aprsc_status && !receiver.aprsc_status && !receiver.stats">down</dt>
+      <dd ng-if="!receiver.aprsc_status && !receiver.stats"></dd>
+      <dt class="label label-warning" ng-if="!receiver.aprsc_status && !receiver.stats">unknown</dt>
       <dd ng-if="!receiver.aprsc_status && !receiver.stats"></dd>
       <dt class="label label-default" ng-if="receiver.privacy">Devices seen (in DDB/total)</dt>
       <dd ng-if="receiver.privacy">{{ receiver.privacy.received_devices.in_ddb }}/{{ receiver.privacy.received_devices.total }}</dd>

@@ -94,6 +94,7 @@
         <td>
           <span class="label label-success" ng-if="receiver.aprsc_status">up</span>
           <span class="label label-danger" ng-if="receiver.stats && !receiver.aprsc_status">down</span>
+          <span class="label label-warning" ng-if="!receiver.stats && !receiver.aprsc_status">unknown</span>
         </td>
         <td>
           <div ng-if="receiver.privacy" title="{{ receiver.privacy.received_devices.in_ddb }} of {{ receiver.privacy.received_devices.total }} received devices in DDB">
