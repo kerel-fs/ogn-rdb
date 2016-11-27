@@ -58,5 +58,5 @@ if __name__ == "__main__":
             receiver.update({'email': ''})
 
     print("Save to {}".format(ARGS.out_file))
-    with open(ARGS.out_file, 'w') as f:
-        json.dump(receiverdb, f)
+    with open(ARGS.out_file, 'w', encoding='utf-8') as f:
+        json.dump(receiverdb, f, ensure_ascii=False)
