@@ -80,7 +80,38 @@ def parse_photo_links(raw):
                 links.append({'href': link.group('photo_url'), 'rel': link.group('name')})
     return photos, links
 
-
+def normalize_country(name):
+    countries = {
+        'argentina': 'AR',
+        'australia': 'AU',
+        'austria': 'AT',
+        'belgium': 'BE',
+        'canada': 'CA',
+        'chile': 'CL',
+        'czech republic': 'CZ',
+        'denmark': 'DK',
+        'finland': 'FI',
+        'france': 'FR',
+        'germany': 'DE',
+        'hungary': 'HU',
+        'israel': 'IL',
+        'italy': 'IT',
+        'luxembourg': 'LU',
+        'namibia': 'NA',
+        'netherlands': 'NL',
+        'new zealand': 'NZ',
+        'poland': 'PL',
+        'slovakia': 'SK',
+        'slovenia': 'SI',
+        'south-africa': 'ZA',
+        'spain': 'ES',
+        'sweden': 'SE',
+        'switzerland': 'CH',
+        'uk': 'GB',
+        'united states': 'US'
+    }
+    return countries.get(name, name+' missing from countries list !' )
+    
 def parse_receiver_list(page):
     country = 'None'
     data = defaultdict(list)
@@ -89,7 +120,7 @@ def parse_receiver_list(page):
     for line in page.splitlines(True):
         heading = re.search(heading_pattern, line)
         if heading:
-            country = heading.group('text').strip().lower()
+            country = normalize_country(heading.group('text').strip().lower())
         else:
             data[country].append(line)
 

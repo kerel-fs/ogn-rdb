@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 from argparse import ArgumentParser
 
-from wikidotparser import parse_receiver_list
+from wikidotparser import parse_receiver_list, normalize_country
 from wikidotcrawler import fetch_page
 
 wiki_url = 'http://wiki.glidernet.org/ajax-module-connector.php'
@@ -42,7 +42,7 @@ if __name__ == "__main__":
 
         if country != 'others':
             for receiver in _receivers:
-                receiver.update({'country': country})
+                receiver.update({'country': normalize_country(country)})
 
         receivers += _receivers
 
