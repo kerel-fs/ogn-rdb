@@ -12,8 +12,9 @@ receiver_pattern = re.compile(r"""\|\|\ \|\|\ ?\[\[\#\ (?P<aprsname>.*)\]\](?:.*
 
 wikidot_link_pattern = re.compile(r"\[\*?([^\[\]\ ]*)\ ([^\[\]]*)\]")
 
-photos_pattern = re.compile(r'\[\*?(?P<photo_url>[^\ \[\]]*)\ (?P<name>[^\ \[\]]*)\]')
-image_url_pattern = re.compile(r".*\.(jpg|png|gif)$", re.IGNORECASE)
+photos_pattern = re.compile(r'\[\*?(?P<photo_url>[^\s\[\]]*)\s+(?P<name>[^\]]*)\]')
+
+image_url_pattern = re.compile(r".*\.(svg|jpeg|pdf|apng|mng|jpg|png|gif)$", re.IGNORECASE)
 
 mail_address_pattern = re.compile(r'^[a-z0-9+\-_%.]+@[a-z0-9+\-_%.]+.[a-z]{2,}$', re.IGNORECASE)
 contact_mail_pattern = re.compile(r'\[\[\[mailto:(?P<email>[^?\ ]*)(?P<subject>.*)\|\ *(?P<name>.*)\]\]\]')
