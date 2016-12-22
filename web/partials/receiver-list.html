@@ -42,35 +42,35 @@
   <table class="table table-striped">
     <thead>
       <th>#</th>
-      <th ng-click="order('callsign')">
+      <th ng-click="order(['callsign'])">
         Callsign
         <span class="glyphicon"
-              ng-if="predicate=='callsign'"
+              ng-if="predicate[0]=='callsign'"
               ng-class="{'glyphicon-chevron-up' : reverse, 'glyphicon-chevron-down': !reverse}"></span>
       </th>
       <th>Location</th>
-      <th ng-click="order('rdb.country')">
+      <th ng-click="order(['rdb.country', 'callsign'])">
         Country
         <span class="glyphicon"
-              ng-if="predicate=='rdb.country'"
+              ng-if="predicate[0]=='rdb.country'"
               ng-class="{'glyphicon-chevron-up' : reverse, 'glyphicon-chevron-down': !reverse}"></span>
       </th>
-      <th ng-click="order('rdb.contact')">
+      <th ng-click="order(['rdb.contact','callsign'])">
         Contact
         <span class="glyphicon"
-              ng-if="predicate=='rdb.contact'"
+              ng-if="predicate[0]=='rdb.contact'"
               ng-class="{'glyphicon-chevron-up' : reverse, 'glyphicon-chevron-down': !reverse}"></span>
       </th>
-      <th ng-click="order('aprsc_status')">
+      <th ng-click="order(['aprsc_status','callsign'])">
         Status
         <span class="glyphicon"
-              ng-if="predicate=='aprsc_status'"
+              ng-if="predicate[0]=='aprsc_status'"
               ng-class="{'glyphicon-chevron-up' : reverse, 'glyphicon-chevron-down': !reverse}"></span>
       </th>
-      <th ng-click="order('privacy.respects_ddb')" title="Green if the DDB-whitelisting were applied in the last 7 days">
+      <th ng-click="order(['privacy.respects_ddb'])" title="Green if the DDB-whitelisting were applied in the last 7 days">
         Privacy
         <span class="glyphicon"
-              ng-if="predicate=='privacy.respects_ddb'"
+              ng-if="predicate[0]=='privacy.respects_ddb'"
               ng-class="{'glyphicon-chevron-up' : reverse, 'glyphicon-chevron-down': !reverse}"></span>
       </th>
       <th></th>
