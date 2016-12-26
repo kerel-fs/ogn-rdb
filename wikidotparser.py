@@ -1,6 +1,9 @@
 import re
 from collections import defaultdict
 
+from iso3166 import normalize_country
+
+
 photos_base_url = 'http://openglidernetwork.wdfiles.com'
 
 heading_pattern = re.compile(r'\+\+ (?P<text>.*) ?\[\[(?P<tag>.*)\n')
@@ -79,38 +82,6 @@ def parse_photo_links(raw):
             else:
                 links.append({'href': link.group('photo_url'), 'rel': link.group('name')})
     return photos, links
-
-def normalize_country(name):
-    countries = {
-        'argentina': 'AR',
-        'australia': 'AU',
-        'austria': 'AT',
-        'belgium': 'BE',
-        'canada': 'CA',
-        'chile': 'CL',
-        'czech republic': 'CZ',
-        'denmark': 'DK',
-        'finland': 'FI',
-        'france': 'FR',
-        'germany': 'DE',
-        'hungary': 'HU',
-        'israel': 'IL',
-        'italy': 'IT',
-        'luxembourg': 'LU',
-        'namibia': 'NA',
-        'netherlands': 'NL',
-        'new zealand': 'NZ',
-        'poland': 'PL',
-        'slovakia': 'SK',
-        'slovenia': 'SI',
-        'south-africa': 'ZA',
-        'spain': 'ES',
-        'sweden': 'SE',
-        'switzerland': 'CH',
-        'uk': 'GB',
-        'united states': 'US'
-    }
-    return countries.get(name, name+' missing from countries list !' )
     
 def parse_receiver_list(page):
     country = 'None'
