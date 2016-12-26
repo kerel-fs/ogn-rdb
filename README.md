@@ -56,14 +56,14 @@ Example:
       "photos": ["https://example.com/ogn/receiver-photo.jpg"],
       "contact": "John Doe",
       "email": "ogn@example.com",
-      "country": "None",
+      "country": "ZZ",
       "links": [{"href": "https://example.com/blog/installed-ogn-receiver-on-earth",
                  "rel": "Blog"}]
     },
   ],
   },
-  'timestamp': "2016-02-04T11:11:11",
-  'version': '0.2.1'
+  "timestamp": "2016-02-04T11:11:11",
+  "version": "0.2.2"
 }
 ```
 
