@@ -75,7 +75,7 @@ def parse_photo_links(raw):
     links = []
     for link in re.finditer(photos_pattern, raw):
         if link.group('photo_url').startswith('/local--files'):
-            photos.append('{}/{}'.format(photos_base_url, link.group('photo_url')))
+            photos.append('{}{}'.format(photos_base_url, link.group('photo_url')))
         else:
             if re.match(image_url_pattern, link.group('photo_url')):
                 photos.append(link.group('photo_url'))
