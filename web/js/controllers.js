@@ -70,10 +70,6 @@ ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http, $q) {
 
     all_p = $q.all([intern_p, ognrange_p]).then(update_receivers);
 
-    $scope.filter_in_rdb = function(receiver, options) {
-        return ((receiver && receiver.rdb) || $scope.show_rdb_only);
-    };
-
     $scope.toggle_details = function(receiver) {
         receiver.showDetails = !receiver.showDetails;
     }
