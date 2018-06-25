@@ -74,7 +74,7 @@ ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http, $q) {
         receiver.showDetails = !receiver.showDetails;
     }
 
-    $scope.predicate = ['callsign'];
+    $scope.predicate = ['aprsc_status', 'callsign'];
     $scope.reverse = false;
     $scope.order = function(predicate) {
       $scope.reverse = ($scope.predicate[0] === predicate[0]) ? !$scope.reverse : false;
