@@ -1,0 +1,24 @@
+{
+  "name": "ogn-rdb",
+  "version": "0.1.0",
+  "description": "An OpenGliderNetwork receiver database visualisation",
+  "repository": "git@github.com/kerel-fs/ogn-rdb.git",
+  "author": "Fabian P. Schmidt <kerel-fs@gmx.de>",
+  "license": "AGPL-3.0-or-later",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  },
+  "dependencies": {
+    "angular": "1.5.0",
+    "angular-route": "1.5.0",
+    "bootstrap": "3.3.6"
+  },
+  "assets": [
+    "bootstrap/dist/css/bootstrap.min.css",
+    "bootstrap/dist/js/bootstrap.min.js",
+    "bootstrap/dist/fonts/*",
+    "bootstrap/dist/css/bootstrap-theme.min.css",
+    "angular/angular.min.js",
+    "angular-route/angular-route.min.js"
+  ]
+}
