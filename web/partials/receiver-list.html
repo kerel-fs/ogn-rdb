@@ -56,12 +56,6 @@
               ng-if="predicate[0]=='aprsc_status'"
               ng-class="{'glyphicon-chevron-up' : reverse, 'glyphicon-chevron-down': !reverse}"></span>
       </th>
-      <th ng-click="order(['privacy.respects_ddb'])" title="Green if the DDB-whitelisting were applied in the last 7 days">
-        Privacy
-        <span class="glyphicon"
-              ng-if="predicate[0]=='privacy.respects_ddb'"
-              ng-class="{'glyphicon-chevron-up' : reverse, 'glyphicon-chevron-down': !reverse}"></span>
-      </th>
       <th></th>
     </thead>
     <tbody>
@@ -84,16 +78,6 @@
           <span class="label label-success" ng-if="receiver.aprsc_status">up</span>
           <span class="label label-danger" ng-if="receiver.stats && !receiver.aprsc_status">down</span>
           <span class="label label-warning" ng-if="!receiver.stats && !receiver.aprsc_status">unknown</span>
-        </td>
-        <td>
-          <div ng-if="receiver.privacy" title="{{ receiver.privacy.received_devices.in_ddb }} of {{ receiver.privacy.received_devices.total }} received devices in DDB">
-            <span class="label label-success" ng-if="receiver.privacy.respects_ddb">
-              <span class="glyphicon glyphicon-ok-sign" ng-if="receiver.privacy.respects_ddb"></span>
-            </span>
-            <span class="label label-danger" ng-if="!receiver.privacy.respects_ddb">
-              <span class="glyphicon glyphicon-warning-sign" ng-if="!receiver.privacy.respects_ddb"></span>
-            </span>
-          </div>
         </td>
         <td>
           <span class="glyphicon glyphicon-menu-right" aria-hidden="true" ng-show="!receiver.showDetails"></span>
