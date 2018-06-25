@@ -30,11 +30,6 @@
                 ng-click="show_rdb_only = !show_rdb_only"/>
             Show unregistered
         </button>
-        <select class="form-control" ng-model="ddb_filter_state">
-          <option value="show-all">-- Select DDB whitelist filter --</option>
-          <option value="show-legal">Show DDB-whitelist receivers only</option>
-          <option value="show-illegal">Show no DDB-whitelist receivers only</option>
-        </select>
       </div>
     </div>
   </form>
@@ -77,7 +72,7 @@
     </thead>
     <tbody>
       <tr class="clickable"
-          ng-repeat-start="receiver in receivers_list | filter:filter_in_rdb | filter:query | filter:filter_respects_ddb | orderBy:predicate:reverse"
+          ng-repeat-start="receiver in receivers_list | filter:filter_in_rdb | filter:query | orderBy:predicate:reverse"
           ng-click="toggle_details(receiver)">
         <td>{{$index +1}}</td>
         <td><a href="#/receivers/{{receiver.callsign}}">{{receiver.callsign}}</a></td>

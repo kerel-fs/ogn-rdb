@@ -78,17 +78,6 @@ ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http, $q) {
         receiver.showDetails = !receiver.showDetails;
     }
 
-    $scope.ddb_filter_state = "show-all";
-    $scope.filter_respects_ddb = function(receiver) {
-        if ($scope.ddb_filter_state == "show-all") {
-            return true;
-        } else if ($scope.ddb_filter_state == "show-legal") {
-            return (receiver.privacy && receiver.privacy.respects_ddb);
-        } else {
-            return (receiver.privacy && !receiver.privacy.respects_ddb);
-        }
-    };
-
     $scope.predicate = ['callsign'];
     $scope.reverse = false;
     $scope.order = function(predicate) {
