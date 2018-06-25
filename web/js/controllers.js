@@ -37,7 +37,7 @@ ognrdbControllers.controller('ReceiverListCtrl', function($scope, $http, $q) {
             });
         });
 
-    ognrange_p = $http.get("https://ognrange.onglide.com/api/1/stations")
+    ognrange_p = $http.get("https://ogn.peanutpod.de/ognrange/api/1/stations")
         .then(function (response) {
             angular.forEach(response.data.stations, function(station) {
                 if (!$scope.receivers[station.s]) {
